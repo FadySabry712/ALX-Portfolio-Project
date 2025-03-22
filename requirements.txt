@@ -1,0 +1,7 @@
+flask
+langchain
+python-dotenv
+sqlalchemy
+flask-sqlalchemy
+flask-cors
+python-dateutil
