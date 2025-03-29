@@ -1,4 +1,4 @@
-from langchain_community.llms import OpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from datetime import datetime, timedelta
@@ -10,9 +10,10 @@ load_dotenv()
 class DentalAIAgent:
     def __init__(self):
         try:
-            self.llm = OpenAI(
+            self.llm = ChatGoogleGenerativeAI(
+                model="gemini-2.0-flash",
                 temperature=0.7,
-                api_key=os.getenv('OPENAI_API_KEY')
+                google_api_key=os.getenv('GOOGLE_API_KEY')
             )
             self.complication_prompt = PromptTemplate(
                 input_variables=["treatment_type", "days_since_visit"],
@@ -35,7 +36,7 @@ class DentalAIAgent:
     def analyze_patient_risk(self, patient_data):
         """Analyze patient risk based on their treatment history and follow-up status."""
         if not self.chain:
-            return "AI agent not properly initialized. Please check your OpenAI API key."
+            return "AI agent not properly initialized. Please check your Google API key."
 
         if not patient_data.get('last_visit'):
             return "No previous visit data available"

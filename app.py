@@ -5,6 +5,7 @@ from ai_agent import DentalAIAgent
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import re
 
 load_dotenv()
 
@@ -12,7 +13,10 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///dental.db')
+database_url = os.getenv('DATABASE_URL', 'sqlite:///dental.db')
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.urandom(24)
 

@@ -5,3 +5,6 @@ sqlalchemy
 flask-sqlalchemy
 flask-cors
 python-dateutil
+google-generativeai
+langchain-google-genai
+gunicorn
